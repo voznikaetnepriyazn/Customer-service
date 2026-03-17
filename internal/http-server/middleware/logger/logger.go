@@ -1,9 +1,10 @@
 package logger
 
 import (
-	"Customer/internal/http-server/middleware"
 	"log/slog"
 	"time"
+
+	"github.com/voznikaetnepriyazn/Customer-service/internal/http-server/middleware"
 
 	"github.com/gofiber/fiber/v3"
 )

@@ -1,8 +1,9 @@
 package decodejson
 
 import (
-	"Customer/internal/lib/logger/sl"
 	"log/slog"
+
+	"github.com/voznikaetnepriyazn/Customer-service/internal/lib/logger/sl"
 
 	"github.com/gofiber/fiber/v3"
 )

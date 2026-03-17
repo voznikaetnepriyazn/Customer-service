@@ -1,8 +1,9 @@
 package storage
 
 import (
-	"Customer-service/internal/models/customer"
 	"errors"
+
+	"github.com/voznikaetnepriyazn/Customer-service/internal/models/customer"
 
 	"github.com/google/uuid"
 )

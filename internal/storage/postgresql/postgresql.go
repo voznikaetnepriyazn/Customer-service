@@ -1,9 +1,10 @@
 package postgresql
 
 import (
-	"Customer/internal/models/customer"
 	"database/sql"
 	"fmt"
+
+	"github.com/voznikaetnepriyazn/Customer-service/internal/models/customer"
 
 	"github.com/google/uuid"
 )
