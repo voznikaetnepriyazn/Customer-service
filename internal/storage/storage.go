@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"Customer/internal/models/customer"
+	"Customer-service/internal/models/customer"
 	"errors"
 
 	"github.com/google/uuid"
