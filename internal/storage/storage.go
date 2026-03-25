@@ -13,7 +13,7 @@ var (
 	ErrUrlExist    = errors.New("url exist")
 )
 
-type OrderService interface {
+type CustomerService interface {
 	AddURL(customer customer.Customer) (uuid.UUID, error)
 
 	DeleteURL(id uuid.UUID) error

@@ -11,7 +11,7 @@ func UUIDParam(paramName string, log *slog.Logger) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		alias := c.Params("paramName")
 		if alias == "" {
-			slog.Info("id is empty")
+			slog.Warn("id is empty")
 
 			c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"error": "invalid request",
@@ -21,7 +21,7 @@ func UUIDParam(paramName string, log *slog.Logger) fiber.Handler {
 
 		id, err := uuid.Parse(alias)
 		if err != nil {
-			slog.Info("invalid uuid format", slog.String("id", alias), slog.Any("error", err))
+			slog.Warn("invalid uuid format", slog.String("id", alias), slog.Any("error", err))
 			c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"error": "invalid id format",
 			})

@@ -7,9 +7,9 @@ import (
 	"github.com/voznikaetnepriyazn/Customer-service/internal/http-server/middleware/logger"
 	uuidparam "github.com/voznikaetnepriyazn/Customer-service/internal/http-server/middleware/uuid"
 	response "github.com/voznikaetnepriyazn/Customer-service/internal/lib/api/response"
-	decodejson "github.com/voznikaetnepriyazn/Customer-service/internal/lib/logger/decode-json"
+	decodejson "github.com/voznikaetnepriyazn/Customer-service/internal/lib/decode"
 	"github.com/voznikaetnepriyazn/Customer-service/internal/lib/logger/sl"
-	valid "github.com/voznikaetnepriyazn/Customer-service/internal/lib/logger/validate"
+	valid "github.com/voznikaetnepriyazn/Customer-service/internal/lib/validate"
 	"github.com/voznikaetnepriyazn/Customer-service/internal/models/customer"
 	"github.com/voznikaetnepriyazn/Customer-service/internal/storage"
 
@@ -30,15 +30,15 @@ type Request struct {
 }
 
 type Crud interface {
-	NewAdd(log *slog.Logger, adder storage.OrderService) fiber.Handler
-	NewDelete(log *slog.Logger, deleter storage.OrderService) fiber.Handler
-	NewGetAll(log *slog.Logger, get storage.OrderService) fiber.Handler
-	NewGetById(log *slog.Logger, get storage.OrderService) fiber.Handler
-	NewUpdate(log *slog.Logger, update storage.OrderService) fiber.Handler
-	NewIsOrderCreated(log *slog.Logger, ord storage.OrderService) fiber.Handler
+	NewAdd(log *slog.Logger, adder storage.CustomerService) fiber.Handler
+	NewDelete(log *slog.Logger, deleter storage.CustomerService) fiber.Handler
+	NewGetAll(log *slog.Logger, get storage.CustomerService) fiber.Handler
+	NewGetById(log *slog.Logger, get storage.CustomerService) fiber.Handler
+	NewUpdate(log *slog.Logger, update storage.CustomerService) fiber.Handler
+	NewIsOrderCreated(log *slog.Logger, ord storage.CustomerService) fiber.Handler
 }
 
-func NewAdd(log *slog.Logger, adder storage.OrderService) fiber.Handler {
+func NewAdd(log *slog.Logger, adder storage.CustomerService) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		const op = "handlers.url.add.New"
 
@@ -95,7 +95,7 @@ func responseOK(c fiber.Ctx) error {
 	return nil
 }
 
-func NewDelete(log *slog.Logger, deleter storage.OrderService) fiber.Handler {
+func NewDelete(log *slog.Logger, deleter storage.CustomerService) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		const op = "handlers.url.delete.New"
 
@@ -137,7 +137,7 @@ func NewDelete(log *slog.Logger, deleter storage.OrderService) fiber.Handler {
 	}
 }
 
-func NewGetAll(log *slog.Logger, get storage.OrderService) fiber.Handler {
+func NewGetAll(log *slog.Logger, get storage.CustomerService) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		const op = "handlers.url.getById.New"
 
@@ -176,7 +176,7 @@ func NewGetAll(log *slog.Logger, get storage.OrderService) fiber.Handler {
 	}
 }
 
-func NewGetById(log *slog.Logger, get storage.OrderService) fiber.Handler {
+func NewGetById(log *slog.Logger, get storage.CustomerService) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		const op = "handlers.url.getById.New"
 
@@ -219,7 +219,7 @@ func NewGetById(log *slog.Logger, get storage.OrderService) fiber.Handler {
 	}
 }
 
-func NewUpdate(log *slog.Logger, update storage.OrderService) fiber.Handler {
+func NewUpdate(log *slog.Logger, update storage.CustomerService) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		const op = "handlers.url.update.New"
 
@@ -266,7 +266,7 @@ func NewUpdate(log *slog.Logger, update storage.OrderService) fiber.Handler {
 	}
 }
 
-func NewIscustomerCreated(log *slog.Logger, ord storage.OrderService) fiber.Handler {
+func NewIscustomerCreated(log *slog.Logger, ord storage.CustomerService) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		const op = "handlers.url.IsOrderCreated.New"
 

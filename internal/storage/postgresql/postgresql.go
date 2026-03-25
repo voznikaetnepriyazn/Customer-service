@@ -120,8 +120,8 @@ func (s *Storage) GetByIdURL(id uuid.UUID) (uuid.UUID, error) {
 	}
 	defer stmt.Close()
 
-	var order uuid.UUID
-	err = stmt.QueryRow(id).Scan(&order)
+	var customer uuid.UUID
+	err = stmt.QueryRow(id).Scan(&customer)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return uuid.UUID{}, fmt.Errorf("%s: customer not found", op)
@@ -129,7 +129,7 @@ func (s *Storage) GetByIdURL(id uuid.UUID) (uuid.UUID, error) {
 		return uuid.UUID{}, fmt.Errorf("%s: %w", op, err)
 	}
 
-	return order, nil
+	return customer, nil
 }
 
 func (s *Storage) UpdateURL(customer customer.Customer) error {

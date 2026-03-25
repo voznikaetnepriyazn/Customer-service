@@ -12,7 +12,7 @@ func DecodeJSON(c fiber.Ctx, req interface{}, log *slog.Logger) bool {
 	if err := c.Bind().Body(req); err != nil {
 		slog.Error("failed to decode request body", sl.Err(err))
 
-		err := c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+		err := c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "failed to decode request",
 		})
 		if err != nil {
