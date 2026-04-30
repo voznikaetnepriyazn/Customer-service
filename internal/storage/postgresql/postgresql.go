@@ -41,8 +41,8 @@ func (s *Storage) AddURL(customer customer.Customer) (uuid.UUID, error) {
 	newID := uuid.New()
 
 	stmt, err := s.db.Prepare(
-		`INSERT INTO Order ("Id", "idOfCustomer") 
-		VALUES ($1, $2)
+		`INSERT INTO customer (Id, FullName, Email, PhoneNumber, City, FullAdress, PostalCode) 
+		VALUES ($1, $2, $3, $4, $5, $6, $7)
 		`)
 	if err != nil {
 		return uuid.UUID{}, fmt.Errorf("%s: prepare statement: %w", op, err)
@@ -62,7 +62,7 @@ func (s *Storage) DeleteURL(id uuid.UUID) error {
 	const op = "storage.postgresql.deleteURL"
 
 	stmt, err := s.db.Prepare(
-		`DELETE FROM Order WHERE id=Id`)
+		`DELETE FROM customer WHERE id=$1`)
 	if err != nil {
 		return fmt.Errorf("%s: %w", op, err)
 	}
@@ -80,10 +80,9 @@ func (s *Storage) GetAllURL() ([]customer.Customer, error) {
 	const op = "storage.postgresql.getAllURL"
 
 	stmt, err := s.db.Prepare(`
-		SELECT Order.Id
-		FROM Order 
-		INNER JOIN dbo.GoodInOrder ON Order.IdOfClient = GoodInOrder.IdOfClient 
-		INNER JOIN Good ON GoodInOrder.Id = Good.Id
+		SELECT Id, FullName, Email, PhoneNumber, City, FullAdress, PostalCode
+		FROM customer 
+		ORDER BY FullName ASC
 		`)
 	if err != nil {
 		return nil, fmt.Errorf("%s: %w", op, err)
@@ -112,8 +111,8 @@ func (s *Storage) GetAllURL() ([]customer.Customer, error) {
 func (s *Storage) GetByIdURL(id uuid.UUID) (uuid.UUID, error) {
 	const op = "storage.postgresql.getByIdURL"
 
-	stmt, err := s.db.Prepare(`
-	SELECT * FROM dbo.Order WHERE id=Id'
+	stmt, err := s.db.Prepare(` //some troubles here in query and returnable variable
+	SELECT Id, FullName, Email, PhoneNumber, City, FullAdress, PostalCode FROM customer WHERE Id = $1'
 	`)
 	if err != nil {
 		return uuid.UUID{}, fmt.Errorf("%s: %w", op, err)
@@ -138,15 +137,17 @@ func (s *Storage) UpdateURL(customer customer.Customer) error {
 	newID := uuid.New()
 
 	stmt, err := s.db.Prepare(
-		`INSERT INTO Order ("Id", "idOfCustomer") 
-		VALUES ($1, $2)
+		`UPDATE customer
+		SET FullName = $1, Email = $2, PhoneNumber = $3, City = $4, FullAdress = $5, PostalCode = $6
+		WHERE Id = $7
+		RETURNING Id, FullName, Email, PhoneNumber, City, FullAdress, PostalCode
 		`)
 	if err != nil {
 		return fmt.Errorf("%s: prepare statement: %w", op, err)
 	}
 	defer stmt.Close()
 
-	var insertedID uuid.UUID
+	var insertedID uuid.UUID //herre troubles too
 	err = stmt.QueryRow(newID, customer.Id).Scan(&insertedID)
 	if err != nil {
 		return fmt.Errorf("%s: execute query: %w", op, err)
