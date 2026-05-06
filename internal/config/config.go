@@ -32,7 +32,7 @@ func (db DBConfig) DSN() string {
 }
 
 type HttpServer struct {
-	Address     string `env:"ADDRESS" env-default:"localhost:8080"`
+	Address     string `env:"ADDRESS" env-default:"localhost:8081"`
 	Timeout     int64  `env:"TIMEOUT" env-default:"4000000000"`
 	IdleTimeout int64  `env:"IDLE_TIMEOUT" env-default:"6000000000"`
 }
